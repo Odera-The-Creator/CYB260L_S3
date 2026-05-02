@@ -1,0 +1,57 @@
+# Change Description: Created a VPC named VPC-odeobi3113 with three public subnets across three Availability Zones in US-West-2.
+# Revision: 1
+# Date: 2026-05-02
+
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: "CloudFormation template to create a VPC named VPC-odeobi3113 with three public subnets across three Availability Zones in US-West-2."
+
+Resources:
+  StudentVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.13.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: VPC-odeobi3113
+
+  PublicSubnetAZ1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref StudentVPC
+      CidrBlock: 10.13.1.0/24
+      AvailabilityZone: !Select
+        - 0
+        - !GetAZs "us-west-2"
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: VPC-odeobi3113-PublicSubnet-AZ1
+
+  PublicSubnetAZ2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref StudentVPC
+      CidrBlock: 10.13.2.0/24
+      AvailabilityZone: !Select
+        - 1
+        - !GetAZs "us-west-2"
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: VPC-odeobi3113-PublicSubnet-AZ2
+
+  PublicSubnetAZ3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref StudentVPC
+      CidrBlock: 10.13.3.0/24
+      AvailabilityZone: !Select
+        - 2
+        - !GetAZs "us-west-2"
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: VPC-odeobi3113-PublicSubnet-AZ3
